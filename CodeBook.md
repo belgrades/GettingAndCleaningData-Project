@@ -28,10 +28,8 @@ According to README.txt in UCI HAR Dataset we have:
 4. The script also appropriately labels the data set with descriptive names:
 all feature names (attributes) and activity names are converted to lower case,
 underscores and brackets () are removed.
-
 Then it merges the 10299x66 data frame containing features with
 10299x1 data frames containing activity labels and subject IDs.
-
 The result is saved as merged_clean_data.txt, a 10299x68 data frame
 such that the first column contains subject IDs,
 the second column activity names,
