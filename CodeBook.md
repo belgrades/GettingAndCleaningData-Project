@@ -48,6 +48,4 @@ Names of the attributes are similar to the following:
  - I asume that I need ALL the atributes. Thats why I don't use merged data but all data in mAll.
  - When I select all the atributes I merge as step 3 but all values.
  - Then I need 180 rows because we have 6 activities and 30 users.
- - The result is saved as tidy_averages.txt, a 180x70 data frame, where as before,
-  - the first column contains subject IDs, the second column contains activity names (see below),
-and then the averages for each of the 66 attributes are in columns 3...70.
+ - The result is saved as tidy_averages.txt the first column contains subject IDs, the second column contains activity names (see below) and then the averages for each atribute.
