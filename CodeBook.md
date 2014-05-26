@@ -10,30 +10,29 @@ According to README.txt in UCI HAR Dataset we have:
  - 'test/X_test.txt':   Test set.
  - So we have to merge mXtest and mXtrain from Script file
 
-2.  Reads file features.txt and extracts only the measurements on the mean and standard deviation
-	for each measurement.
-	The result is a 10299 x 66 data frame, because only 66 out of 561 attributes are
-	measurements on the mean and standard deviation.
-	All measurements appear to be floating point numbers in the range (-1, 1).
+2. Second Step: Extracts only the measurements on the mean and standard deviation for each measurement. 
+	logiMean<-grepl("mean()",mfeatures[,2],fixed=TRUE) will have an boolean array if the entry has mean() on it.
+	
+	The result is a 10299 x 68 data frame according to step 1.
+	All entries are values normalized according to the owners of the data.
 
-3. Reads activity_labels.txt and applies descriptive activity names to name the activities in the data set:
+3. Uses descriptive activity names to name the activities in the data set:
+   Reading the .txt of ativity labels will tell us which names they use.
  - walking
  - walkingupstairs
  - walkingdownstairs
  - sitting
  - standing
  - laying
+ We need to map 1,2,3,4,5,6 values into walking, walkinggupstaris,...,laying
 	
-4. The script also appropriately labels the data set with descriptive names:
-all feature names (attributes) and activity names are converted to lower case,
-underscores and brackets () are removed.
-Then it merges the 10299x66 data frame containing features with
-10299x1 data frames containing activity labels and subject IDs.
-The result is saved as merged_clean_data.txt, a 10299x68 data frame
-such that the first column contains subject IDs,
-the second column activity names,
-and the last 66 columns are measurements.
-Subject IDs are integers between 1 and 30 inclusive.
+4. Appropriately labels the data set with descriptive activity names. 
+ - All atributes converted to lower case and eliminating () according to sintax problems of R.
+ - Then we merge the Subject table (poeple that made the experiment) with activitie table and values table.
+   cleaned <- cbind(mSubject, mYmerged, mXmerged)
+ - Writing the table
+   write.table(cleaned, "tidy_data_1.txt")
+ - Subject IDs are integers between 1 and 30 inclusive.
 Names of the attributes are similar to the following:
  - tbodyacc-mean-x 
  - tbodyacc-mean-y 
@@ -45,8 +44,10 @@ Names of the attributes are similar to the following:
  - tgravityacc-mean-y
 	
 5. Finally, the script creates a 2nd, independent tidy data set with the average
- of each measurement for each activity and each subject.
-The result is saved as data_set_with_the_averages.txt, a 180x68 data frame, where as before,
-the first column contains subject IDs, the second column contains activity names (see below),
-and then the averages for each of the 66 attributes are in columns 3...68.
-There are 30 subjects and 6 activities, thus 180 rows in this data set with averages.
+ of each measurement for each activity and each subject of all atributes.
+ - I asume that I need ALL the atributes. Thats why I don't use merged data but all data in mAll.
+ - When I select all the atributes I merge as step 3 but all values.
+ - Then I need 180 rows because we have 6 activities and 30 users.
+ - The result is saved as tidy_averages.txt, a 180x70 data frame, where as before,
+  - the first column contains subject IDs, the second column contains activity names (see below),
+and then the averages for each of the 66 attributes are in columns 3...70.
